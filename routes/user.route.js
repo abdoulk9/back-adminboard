@@ -59,5 +59,39 @@ router.get('/:id', (req, res) =>{
       });
 });
 
+//UPDATE
+router.put('/:id', (req, res)=>{
+     let userInfos = [
+         req.body.name,
+         req.body.passeword,
+         req.body.mail,
+         req.params.id
+     ];
+    let QueryUpdate = "UPDATE  user SET name =?, passeword =?, mail =? WHERE id =?";
+    let query = mysql.format(QueryUpdate, userInfos);
+    db.query(query, (err, response) =>{
+        if(err) {
+            console.error;
+        }else{
+            res.json({ update : response});
+            console.log(response.affectedRows + ' ligne(s) a été modifiée');
+        }
+    });
+});
+
+//DELETE
+router.delete('/:id', (req, res) =>{
+    let QueryDelete = "DELETE FROM user WHERE id = ?";
+    let query =mysql.format(QueryDelete, [id = req.params.id]);
+    db.query(query, (err, response) =>{
+        if(err){
+            console.error;
+        }else{
+            res.json({delete: response});
+            console.log(response.affectedRows + ' ligne(s) a été supprimer');
+        }
+    })
+})
+
 
 module.exports = router;
