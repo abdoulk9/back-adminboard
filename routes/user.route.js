@@ -35,9 +35,29 @@ router.get('/', (req, res) => {
             res.json({ error: err });
             console.log(error);
         } else {
-            res.json({ data: response});
+            res.json({ users: response});
             console.log(response);
         }
     });
 });
+
+//SELECT ONE
+router.get('/:id', (req, res) =>{
+   
+
+     let  QuerySelectOne ="SELECT * FROM user WHERE id = ?";
+     //req.params.id = id;
+     console.log(req.params.id);
+      let query = mysql.format(QuerySelectOne, [id = req.params.id]);
+      db.query(query, (err, response) =>{
+          if(err){
+              console.error;
+          }else{
+              res.json({ user: response});
+              console.log(response);
+          }
+      });
+});
+
+
 module.exports = router;

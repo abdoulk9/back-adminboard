@@ -9,6 +9,15 @@ const dataConnect = mysql.createConnection({
     database:"userdata"
 });
 
+//fonction qui verifie la connection à la BD
+dataConnect.connect(function(err){
+    if(!err){
+        console.log("Database is connected!");
+    }else{
+        console.log("Error connecting database, check the server!");
+    }
+});
+
 //Activation de la connection
 dataConnect.query('USE userdata');
 
